@@ -3,7 +3,7 @@ sample_Rate = 4000;
 total_time = 2;
 total_length = total_time*sample_Rate;
 
-freq = 1000;
+freq = 250;
 
 gen_sin=@(f, t, phase, noise)sin(2*pi*f*t + phase) + noise;
 
@@ -33,12 +33,14 @@ xlim([0 0.025])
 sound(.5*sin2, sample_Rate)
 pause
 %integrating filter
-filt = 1/8*ones(1,8);
+n = 12
+filt = 1/n*ones(1,n);
 
-der_filt = 1/2*[-1 0 1];
+% der_filt = 1/2*[-1 0 1];
 
 
-sin3 = conv(sin2, der_filt,'same')
+sin3 = conv(sin2, filt,'same')
+sin3 = conv(sin3, filt,'same')
 
 sound(sin3, sample_Rate)
 
